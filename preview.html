@@ -569,6 +569,7 @@
                 const collection_contributors = params.get('collection_contributors') || 'millemilliards';
                 const collection_newcomers = params.get('collection_newcomers') || 'amour';
 
+                // Pour la preview, utiliser l'API n8n
                 let url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
                 if (base_date) {
                     url += `&base_date=${base_date}`;
@@ -576,7 +577,7 @@
 
                 const response = await fetch(url);
                 const data = await response.json();
-                
+
                 const zeitgeist = data[0];
                 const { date_from, date_to, terms } = zeitgeist;
                 const newcomers = zeitgeist.newcomers || [];
@@ -855,6 +856,17 @@
                 } else {
                     htmlContent = document.documentElement.outerHTML;
                 }
+
+                // Pour les versions publiées, remplacer l'URL n8n par une URL relative vers le JSON local
+                const catalogue = params.get('catalogue') || '';
+                const uid = params.get('uid') || '';
+                const localJsonUrl = `/${catalogue}/${uid}.json`;
+
+                // Remplacer l'URL dans le script JavaScript
+                htmlContent = htmlContent.replace(
+                    /https:\/\/n8n\.musiques-incongrues\.net\/webhook\/zeitgeist\.json\?[^"']*/,
+                    localJsonUrl
+                );
 
                 // Ajouter l'URL JSON aux paramètres
                 params.set('json_url', encodeURIComponent(jsonUrl));
