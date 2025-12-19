@@ -742,24 +742,24 @@
         async function publierEpisode() {
             const publishButton = document.getElementById('publishButton');
             const originalText = publishButton.textContent;
-            
+
             try {
                 // Désactiver le bouton pendant la publication
                 publishButton.disabled = true;
                 publishButton.textContent = 'Publication...';
                 publishButton.style.background = '#cccccc';
                 publishButton.style.cursor = 'not-allowed';
-                
+
                 // Récupérer les paramètres actuels
                 const params = new URLSearchParams(window.location.search);
                 console.log('Paramètres de publication:', params.toString());
-                
+
                 // Construire l'URL JSON (comme dans loadDataWithButtons)
                 const num = params.get('num') || 1;
                 const unit = params.get('unit') || 'weeks';
                 const limit = params.get('limit') || 50;
                 const base_date = params.get('base_date') || '';
-                
+
                 let jsonUrl = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
                 if (base_date) {
                     jsonUrl += `&base_date=${base_date}`;
@@ -767,6 +767,10 @@
                 
                 // Ajouter l'URL JSON aux paramètres
                 params.set('json_url', encodeURIComponent(jsonUrl));
+                
+                // Ajouter l'URL complète de la preview
+                const previewUrl = window.location.href;
+                params.set('preview_url', encodeURIComponent(previewUrl));
                 
                 // S'assurer que tous les paramètres de configuration sont inclus
                 const configParams = [
@@ -791,6 +795,7 @@
                 });
                 
                 console.log('URL JSON ajoutée:', jsonUrl);
+                console.log('URL Preview ajoutée:', previewUrl);
                 console.log('Paramètres complets:', params.toString());
                 
                 // Construire l'URL du workflow avec tous les paramètres
