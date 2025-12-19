@@ -379,7 +379,7 @@
                 <div class="subtitle">Journananal Incongru</div>
             </div>
             <div class="date-range" id="dateRange">Chargement...</div>
-            <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+            <div id="actionButtons" class="action-buttons" style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
                 <button id="jsonButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">JSON</button>
                 <button id="tweakButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Modifier</button>
                 <button id="publishButton" style="background: #4caf50; color: #ffffff; padding: 8px 16px; border: 2px solid #4caf50; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Publier</button>
@@ -764,26 +764,39 @@
                 if (base_date) {
                     jsonUrl += `&base_date=${base_date}`;
                 }
-                
+
+                // Capturer le HTML de la page sans les boutons d'action
+                const actionButtons = document.getElementById('actionButtons');
+                let htmlContent = '';
+
+                if (actionButtons) {
+                    // Masquer temporairement les boutons d'action pour la capture
+                    actionButtons.style.display = 'none';
+                    htmlContent = document.documentElement.outerHTML;
+                    actionButtons.style.display = 'flex'; // Remettre l'affichage original
+                } else {
+                    htmlContent = document.documentElement.outerHTML;
+                }
+
                 // Ajouter l'URL JSON aux paramètres
                 params.set('json_url', encodeURIComponent(jsonUrl));
-                
+
                 // Ajouter l'URL complète de la preview
                 const previewUrl = window.location.href;
                 params.set('preview_url', encodeURIComponent(previewUrl));
-                
+
                 // S'assurer que tous les paramètres de configuration sont inclus
                 const configParams = [
-                    'collection_labels', 'collection_radios', 'collection_artists', 
+                    'collection_labels', 'collection_radios', 'collection_artists',
                     'collection_contributors', 'collection_newcomers', 'titre', 'edito'
                 ];
-                
+
                 configParams.forEach(param => {
                     if (!params.has(param)) {
                         // Valeurs par défaut si le paramètre n'est pas présent
                         const defaults = {
                             'collection_labels': 'gargamelle',
-                            'collection_radios': 'discutons', 
+                            'collection_radios': 'discutons',
                             'collection_artists': 'sonsoftheananas',
                             'collection_contributors': 'millemilliards',
                             'collection_newcomers': 'amour',
@@ -793,22 +806,26 @@
                         params.set(param, defaults[param]);
                     }
                 });
-                
+
                 console.log('URL JSON ajoutée:', jsonUrl);
                 console.log('URL Preview ajoutée:', previewUrl);
                 console.log('Paramètres complets:', params.toString());
-                
+
                 // Construire l'URL du workflow avec tous les paramètres
                 const workflowUrl = 'https://n8n.musiques-incongrues.net/webhook-test/zeitgeist.publish?' + params.toString();
 
                 console.log('Publication vers:', workflowUrl);
 
-                // Appeler le workflow de publication
+                // Appeler le workflow de publication avec le contenu HTML
                 const response = await fetch(workflowUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify({
+                        html_content: htmlContent,
+                        current_url: previewUrl
+                    })
                 });
                 
                 if (response.ok) {
