@@ -470,6 +470,7 @@
                 const num = params.get('num') || 1;
                 const unit = params.get('unit') || 'weeks';
                 const limit = params.get('limit') || 50;
+                const base_date = params.get('base_date') || '';
 
                 // Récupérer les collections depuis les paramètres URL
                 const collection_labels = params.get('collection_labels') || 'gargamelle';
@@ -478,7 +479,10 @@
                 const collection_contributors = params.get('collection_contributors') || 'millemilliards';
                 const collection_newcomers = params.get('collection_newcomers') || 'amour';
 
-                const url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                let url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                if (base_date) {
+                    url += `&base_date=${base_date}`;
+                }
 
                 const response = await fetch(url);
                 const data = await response.json();
