@@ -349,6 +349,63 @@
             text-align: center;
         }
 
+        .pinacotheque {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .pinacotheque-title {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .pinacotheque-description {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .mosaic-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mosaic-item:hover {
+            transform: scale(1.02);
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mosaic-item.tall {
+            grid-row: span 2;
+        }
+
+        .mosaic-item.wide {
+            grid-column: span 2;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -547,6 +604,25 @@
 
                 let html = '';
 
+                // Pinacothèque - juste après le bandeau
+                if (zeitgeist.images && Array.isArray(zeitgeist.images) && zeitgeist.images.length > 0) {
+                    const filteredImages = zeitgeist.images.filter(item => item && item.url).slice(0, 8);
+                    if (filteredImages.length > 0) {
+                        html += `
+                            <div class="pinacotheque">
+                                <div class="mosaic">
+                                    ${filteredImages.map((image, index) => {
+                                        let classes = 'mosaic-item';
+                                        if (index === 0 || index === 6) classes += ' tall';
+                                        if (index === 2) classes += ' wide';
+                                        return `<div class="${classes}"><img src="${image.url}" alt="Image ${index + 1}"></div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
                 // Cher Journananal (éditorial)
                 const edito = params.get('edito') || '';
                 if (edito) {
@@ -600,7 +676,7 @@
                                     <span class="section-count">${sortedContributors.length}</span>
                                 </div>
                                 <div class="section-description purple-border">
-                                    Les utilisateurs actifs qui ont participé à la vie de la plateforme. Merci à ces contributeurs pour leur engagement !
+                                    Sympathiques maniaques, soyez bénis !
                                 </div>
                                 <div class="grid">
                                     ${sortedContributors.map((item) => `
@@ -626,7 +702,7 @@
                                     <span class="section-count">${sortedLabels.length}</span>
                                 </div>
                                 <div class="section-description blue-border">
-                                    Les labels les plus en vogue sur la plateforme Musiques Incongrues lors de cette période. Ces maisons de disques et collectifs musicaux définissent les tendances de la scène.
+                                    Intentions et pratiques variées.
                                 </div>
                                 <div class="grid">
                                     ${sortedLabels.map((item) => `
@@ -652,7 +728,7 @@
                                     <span class="section-count">${sortedRadios.length}</span>
                                 </div>
                                 <div class="section-description pink-border">
-                                    Les stations radio et émissions les plus populaires. Découvrez les programmes qui façonnent l'actualité musicale et culturelle du moment.
+                                    Toujours là prêtes à infiltrer nos oreilles curieuses.
                                 </div>
                                 <div class="grid">
                                     ${sortedRadios.map((item) => `
@@ -678,7 +754,7 @@
                                     <span class="section-count">${sortedPeople.length}</span>
                                 </div>
                                 <div class="section-description yellow-border">
-                                    Les artistes et musiciens qui font l'actualité. Explorez les talents émergents et confirmés qui captent l'attention de la communauté.
+                                    Ça grouille, ça frétille, ça complote. Quel bonheur !
                                 </div>
                                 <div class="grid">
                                     ${sortedPeople.map((item) => `
@@ -691,6 +767,8 @@
                         `;
                     }
                 }
+
+
 
                 document.getElementById('content').innerHTML = html;
                 
@@ -788,7 +866,7 @@
                 // S'assurer que tous les paramètres de configuration sont inclus
                 const configParams = [
                     'collection_labels', 'collection_radios', 'collection_artists',
-                    'collection_contributors', 'collection_newcomers', 'titre', 'edito'
+                    'collection_contributors', 'collection_newcomers', 'titre', 'catalogue', 'uid', 'edito'
                 ];
 
                 configParams.forEach(param => {
@@ -801,6 +879,8 @@
                             'collection_contributors': 'millemilliards',
                             'collection_newcomers': 'amour',
                             'titre': 'Zeitgeist',
+                            'catalogue': '',
+                            'uid': '',
                             'edito': ''
                         };
                         params.set(param, defaults[param]);
