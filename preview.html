@@ -768,6 +768,28 @@
                 // Ajouter l'URL JSON aux paramètres
                 params.set('json_url', encodeURIComponent(jsonUrl));
                 
+                // S'assurer que tous les paramètres de configuration sont inclus
+                const configParams = [
+                    'collection_labels', 'collection_radios', 'collection_artists', 
+                    'collection_contributors', 'collection_newcomers', 'titre', 'edito'
+                ];
+                
+                configParams.forEach(param => {
+                    if (!params.has(param)) {
+                        // Valeurs par défaut si le paramètre n'est pas présent
+                        const defaults = {
+                            'collection_labels': 'gargamelle',
+                            'collection_radios': 'discutons', 
+                            'collection_artists': 'sonsoftheananas',
+                            'collection_contributors': 'millemilliards',
+                            'collection_newcomers': 'amour',
+                            'titre': 'Zeitgeist',
+                            'edito': ''
+                        };
+                        params.set(param, defaults[param]);
+                    }
+                });
+                
                 console.log('URL JSON ajoutée:', jsonUrl);
                 console.log('Paramètres complets:', params.toString());
                 
