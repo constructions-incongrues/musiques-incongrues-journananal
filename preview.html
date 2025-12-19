@@ -862,12 +862,6 @@
                 const uid = params.get('uid') || '';
                 const localJsonUrl = `${catalogue}/${uid}.json`;
 
-                // Remplacer l'URL dans le script JavaScript
-                htmlContent = htmlContent.replace(
-                    /https:\/\/n8n\.musiques-incongrues\.net\/webhook\/zeitgeist\.json\?[^"']*/,
-                    localJsonUrl
-                );
-
                 // Ajouter l'URL JSON aux paramètres
                 params.set('json_url', encodeURIComponent(jsonUrl));
 
