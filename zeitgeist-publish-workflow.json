@@ -1,0 +1,235 @@
+{
+  "name": "zeitgeist.publish",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zeitgeist.publish",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "num",
+              "value": "={{ $json.body.num }}"
+            },
+            {
+              "name": "unit",
+              "value": "={{ $json.body.unit }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.body.limit }}"
+            },
+            {
+              "name": "base_date",
+              "value": "={{ $json.body.base_date }}"
+            },
+            {
+              "name": "titre",
+              "value": "={{ $json.body.titre }}"
+            },
+            {
+              "name": "html_content",
+              "value": "={{ $json.body.html_content }}"
+            },
+            {
+              "name": "json_url",
+              "value": "={{ $json.body.json_url }}"
+            },
+            {
+              "name": "current_url",
+              "value": "={{ $json.body.current_url }}"
+            }
+          ]
+        }
+      },
+      "name": "Extract Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.json_url }}",
+        "options": {}
+      },
+      "name": "Fetch JSON Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "episode_id",
+              "value": "={{ $now.format('YYYY-MM-DD') }}-{{ $('Extract Data').item.json.titre.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') }}"
+            },
+            {
+              "name": "json_filename",
+              "value": "={{ $json.episode_id }}.json"
+            },
+            {
+              "name": "html_filename",
+              "value": "={{ $json.episode_id }}.html"
+            }
+          ]
+        }
+      },
+      "name": "Generate Filenames",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "owner": "constructions-incongrues",
+        "repository": "musiques-incongrues-journananal",
+        "filePath": "episodes/{{ $('Generate Filenames').item.json.json_filename }}",
+        "fileContent": "={{ $('Fetch JSON Data').item.json | toJsonString }}",
+        "commitMessage": "Ajouter épisode zeitgeist: {{ $('Extract Data').item.json.titre }}",
+        "options": {}
+      },
+      "name": "Create JSON File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "owner": "constructions-incongrues",
+        "repository": "musiques-incongrues-journananal",
+        "filePath": "episodes/{{ $('Generate Filenames').item.json.html_filename }}",
+        "fileContent": "={{ $('Extract Data').item.json.html_content }}",
+        "commitMessage": "Ajouter épisode zeitgeist: {{ $('Extract Data').item.json.titre }}",
+        "options": {}
+      },
+      "name": "Create HTML File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        900,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Épisode {{ $('Extract Data').item.json.titre }} publié avec succès\",\n  \"episode_id\": \"{{ $('Generate Filenames').item.json.episode_id }}\",\n  \"files\": {\n    \"json\": \"episodes/{{ $('Generate Filenames').item.json.json_filename }}\",\n    \"html\": \"episodes/{{ $('Generate Filenames').item.json.html_filename }}\"\n  },\n  \"github_urls\": {\n    \"json\": \"{{ $('Create JSON File').item.json.content.html_url }}\",\n    \"html\": \"{{ $('Create HTML File').item.json.content.html_url }}\"\n  }\n}"
+      },
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Data": {
+      "main": [
+        [
+          {
+            "node": "Fetch JSON Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate Filenames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch JSON Data": {
+      "main": [
+        [
+          {
+            "node": "Create JSON File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Filenames": {
+      "main": [
+        [
+          {
+            "node": "Create HTML File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create JSON File": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create HTML File": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "staticData": null,
+  "meta": {
+    "instanceId": "instance1"
+  },
+  "id": "zeitgeist-publish-workflow",
+  "tags": []
+}

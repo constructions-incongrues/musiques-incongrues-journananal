@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeitgeist - Musiques Incongrues</title>
+
+    <!-- Meta tags Open Graph -->
+    <meta property="og:title" content="Zeitgeist - Musiques Incongrues">
+    <meta property="og:description" content="Découvrez les tendances musicales et les acteurs qui façonnent la scène culturelle alternative. Labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta property="og:image" content="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
+    <meta property="og:url" content="https://journananal.musiques-incongrues.net/preview.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Musiques Incongrues">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Meta tags Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zeitgeist - Musiques Incongrues">
+    <meta name="twitter:description" content="Découvrez les tendances musicales et les acteurs qui façonnent la scène culturelle alternative. Labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta name="twitter:image" content="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
+    <meta name="twitter:site" content="@musiquesinc">
+    
+    <!-- Meta tags génériques -->
+    <meta name="description" content="Zeitgeist de Musiques Incongrues - Découvrez les tendances musicales et culturelles du moment : labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta name="keywords" content="musique, zeitgeist, tendances, labels, artistes, radios, musiques incongrues, culture alternative">
+    <meta name="author" content="Musiques Incongrues">
+    <meta name="theme-color" content="#e600e6">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
     <style>
         * {
             margin: 0;
@@ -38,14 +63,15 @@
 
         .logo {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            text-align: center;
             margin-bottom: 15px;
         }
 
         .logo img {
-            width: 256px;
-            height: 256px;
+            width: 128px;
+            height: 128px;
         }
 
         h1 {
@@ -67,6 +93,7 @@
             color: #ffffff;
             margin-top: 10px;
             opacity: 0.8;
+            text-align: center;
         }
 
         .section {
@@ -348,16 +375,14 @@
         <div class="header-content">
             <div class="logo">
                 <img src="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png" alt="Musiques Incongrues">
-                <div>
-                    <h1>Zeitgeist</h1>
-                    <div class="subtitle">Musiques Incongrues</div>
-                </div>
+                <h1>Zeitgeist</h1>
+                <div class="subtitle">Journananal Incongru</div>
             </div>
             <div class="date-range" id="dateRange">Chargement...</div>
             <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
-                <button id="tweakButton" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; cursor: pointer; font-size: 14px; backdrop-filter: blur(5px);">⚙️ Tweak</button>
-                <button id="jsonButton" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; cursor: pointer; font-size: 14px; backdrop-filter: blur(5px);">📄 JSON</button>
-                <button id="publishButton" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); padding: 8px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; cursor: not-allowed; font-size: 14px; backdrop-filter: blur(5px);" disabled>🚀 Publish</button>
+                <button id="jsonButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">JSON</button>
+                <button id="tweakButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Modifier</button>
+                <button id="publishButton" style="background: #4caf50; color: #ffffff; padding: 8px 16px; border: 2px solid #4caf50; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Publier</button>
             </div>
         </div>
     </header>
@@ -512,7 +537,6 @@
                 });
                 
                 document.getElementById('dateRange').textContent = `Du ${dateFrom} au ${dateTo}`;
-                document.getElementById('footer').innerHTML = `<a href="${url}" target="_blank">Données JSON utilisées</a>`;
 
                 // Ajouter le lien rel alternate pour le JSON
                 const link = document.createElement('link');
@@ -707,6 +731,89 @@
                     window.open(url, '_blank');
                 };
             };
+
+            // Bouton Publier
+            document.getElementById('publishButton').onclick = function() {
+                publierEpisode();
+            };
+        }
+
+        // Fonction pour publier un épisode
+        async function publierEpisode() {
+            const publishButton = document.getElementById('publishButton');
+            const originalText = publishButton.textContent;
+            
+            try {
+                // Désactiver le bouton pendant la publication
+                publishButton.disabled = true;
+                publishButton.textContent = 'Publication...';
+                publishButton.style.background = '#cccccc';
+                publishButton.style.cursor = 'not-allowed';
+                
+                // Récupérer les paramètres actuels
+                const params = new URLSearchParams(window.location.search);
+                const titre = params.get('titre') || 'Zeitgeist';
+                
+                // Construire l'URL du workflow avec les paramètres
+                const workflowUrl = 'https://n8n.musiques-incongrues.net/webhook-test/zeitgeist.publish?' + params.toString();
+
+                console.log('Publication vers:', workflowUrl);
+
+                // Appeler le workflow de publication
+                const response = await fetch(workflowUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Résultat publication:', result);
+                    
+                    // Succès
+                    publishButton.textContent = '✓ Publié';
+                    publishButton.style.background = '#4caf50';
+                    publishButton.style.borderColor = '#4caf50';
+                    publishButton.style.color = '#ffffff';
+                    
+                    // Afficher un message de succès
+                    alert('Épisode publié avec succès !');
+                    
+                    // Remettre le bouton à l'état normal après 3 secondes
+                    setTimeout(() => {
+                        publishButton.textContent = originalText;
+                        publishButton.style.background = '#cccccc';
+                        publishButton.style.borderColor = '#cccccc';
+                        publishButton.style.color = '#666666';
+                        publishButton.disabled = true;
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de la publication:', error);
+                
+                // Erreur
+                publishButton.textContent = '✗ Erreur';
+                publishButton.style.background = '#f44336';
+                publishButton.style.borderColor = '#f44336';
+                publishButton.style.color = '#ffffff';
+                
+                // Afficher un message d'erreur
+                alert('Erreur lors de la publication: ' + error.message);
+                
+                // Remettre le bouton à l'état normal après 3 secondes
+                setTimeout(() => {
+                    publishButton.textContent = originalText;
+                    publishButton.style.background = '#cccccc';
+                    publishButton.style.borderColor = '#cccccc';
+                    publishButton.style.color = '#666666';
+                    publishButton.disabled = true;
+                }, 3000);
+            }
         }
 
         // Modifier loadData pour configurer le bouton JSON
