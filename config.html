@@ -85,6 +85,11 @@
             </div>
 
             <div class="form-group">
+                <label for="edito">Cher Journananal (éditorial):</label>
+                <textarea id="edito" name="edito" rows="4" placeholder="Texte de l'éditorial (optionnel)..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; font-family: inherit;"></textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="base_date">Date de base:</label>
                 <input type="date" id="base_date" name="base_date" required>
             </div>
@@ -242,7 +247,7 @@
             const params = new URLSearchParams(window.location.search);
 
             // Pré-remplir les champs avec les valeurs des paramètres
-            const fields = ['titre', 'base_date', 'num', 'unit', 'limit', 'collection_labels', 'collection_radios', 'collection_artists', 'collection_contributors', 'collection_newcomers'];
+            const fields = ['titre', 'edito', 'base_date', 'num', 'unit', 'limit', 'collection_labels', 'collection_radios', 'collection_artists', 'collection_contributors', 'collection_newcomers'];
 
             fields.forEach(field => {
                 const value = params.get(field);
@@ -258,6 +263,10 @@
 
             const params = new URLSearchParams();
             params.set('titre', document.getElementById('titre').value);
+            const edito = document.getElementById('edito').value;
+            if (edito) {
+                params.set('edito', edito);
+            }
             params.set('base_date', document.getElementById('base_date').value);
             params.set('num', document.getElementById('num').value);
             params.set('unit', document.getElementById('unit').value);

@@ -520,6 +520,21 @@
 
                 let html = '';
 
+                // Cher Journananal (éditorial)
+                const edito = params.get('edito') || '';
+                if (edito) {
+                    html += `
+                        <div class="section">
+                            <div class="section-header">
+                                <h2 class="section-title">Cher Journananal</h2>
+                            </div>
+                            <div class="section-description" style="font-size: 1.1em; border-left-color: #e600e6;">
+                                ${decodeURIComponent(edito).replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                }
+
                 // Nouvelles Têtes
                 if (newcomers && Array.isArray(newcomers) && newcomers.length > 0) {
                     const filtered = newcomers.filter(item => item && item.username);
