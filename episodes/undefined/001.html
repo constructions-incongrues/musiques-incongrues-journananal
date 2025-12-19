@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeitgeist - Musiques Incongrues</title>
+
+    <!-- Meta tags Open Graph -->
+    <meta property="og:title" content="Zeitgeist - Musiques Incongrues">
+    <meta property="og:description" content="Découvrez les tendances musicales et les acteurs qui façonnent la scène culturelle alternative. Labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta property="og:image" content="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
+    <meta property="og:url" content="https://journananal.musiques-incongrues.net/preview.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Musiques Incongrues">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Meta tags Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zeitgeist - Musiques Incongrues">
+    <meta name="twitter:description" content="Découvrez les tendances musicales et les acteurs qui façonnent la scène culturelle alternative. Labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta name="twitter:image" content="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
+    <meta name="twitter:site" content="@musiquesinc">
+    
+    <!-- Meta tags génériques -->
+    <meta name="description" content="Zeitgeist de Musiques Incongrues - Découvrez les tendances musicales et culturelles du moment : labels émergents, artistes en vogue, radios indépendantes et communauté active.">
+    <meta name="keywords" content="musique, zeitgeist, tendances, labels, artistes, radios, musiques incongrues, culture alternative">
+    <meta name="author" content="Musiques Incongrues">
+    <meta name="theme-color" content="#e600e6">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            padding: 30px 20px 40px 20px;
+            border-bottom: 2px solid #e600e6;
+            margin: -20px -20px 40px -20px;
+            background: #e600e6;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo img {
+            width: 128px;
+            height: 128px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #ffffff;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .date-range {
+            font-size: 0.95em;
+            color: #ffffff;
+            margin-top: 10px;
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .section-count {
+            background: #e0e0e0;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .section-description {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border-left: 4px solid #e0e0e0;
+        }
+
+        .section-description.blue-border {
+            border-left-color: #1fd4e5;
+        }
+
+        .section-description.pink-border {
+            border-left-color: #e600e6;
+        }
+
+        .section-description.yellow-border {
+            border-left-color: #ffea29;
+        }
+
+        .section-description.green-border {
+            border-left-color: #4caf50;
+        }
+
+        .section-description.purple-border {
+            border-left-color: #9c27b0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 160px;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .card.blue {
+            background: #1fd4e5;
+            border-left: 4px solid #1fd4e5;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .card.blue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(31, 212, 229, 0.6);
+            z-index: 0;
+        }
+
+        .card.pink {
+            background: #e600e6;
+            border-left: 4px solid #e600e6;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .card.pink::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(230, 0, 230, 0.6);
+            z-index: 0;
+        }
+
+        .card.yellow {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .card.yellow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 0;
+        }
+
+        .card.green {
+            background: #4caf50;
+            border-left: 4px solid #4caf50;
+        }
+
+        .card.green::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.84);
+            z-index: 0;
+        }
+
+        .card.purple {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-left: 4px solid #9c27b0;
+            background-color: rgba(156, 39, 176, 0.2);
+        }
+
+        .card.purple::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(156, 39, 176, 0.6);
+            z-index: 0;
+        }
+
+        .card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-name {
+            font-size: 1.25em;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .card.blue .card-name {
+            color: #ffffff;
+            font-size: 1.35em;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 -1px 2px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.4);
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .card.pink .card-name {
+            color: #ffffff !important;
+            font-size: 1.35em !important;
+            font-weight: 700 !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 -1px 2px rgba(0,0,0,0.7) !important;
+            background: rgba(0,0,0,0.7) !important;
+            padding: 10px 14px !important;
+            border-radius: 6px !important;
+            text-align: center !important;
+        }
+
+        .card.yellow .card-name {
+            color: #ffffff;
+            font-size: 1.35em;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 -1px 2px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .card.green .card-name,
+        .card.purple .card-name {
+            color: #ffffff;
+            font-size: 1.35em;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 -1px 2px rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.25);
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .card.purple .card-name {
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 -1px 2px rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.7);
+            padding: 10px 14px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            padding: 100px 20px;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            padding: 20px;
+            border-radius: 4px;
+            color: #c62828;
+            text-align: center;
+        }
+
+        .pinacotheque {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .pinacotheque-title {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .pinacotheque-description {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .mosaic-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mosaic-item:hover {
+            transform: scale(1.02);
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mosaic-item.tall {
+            grid-row: span 2;
+        }
+
+        .mosaic-item.wide {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            header {
+                margin: -15px -15px 30px -15px;
+                padding: 20px 15px 30px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png" alt="Musiques Incongrues">
+                <h1>Zeitgeist</h1>
+                <div class="subtitle">Journananal Incongru</div>
+            </div>
+            <div class="date-range" id="dateRange">Chargement...</div>
+            <div id="actionButtons" class="action-buttons" style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+                <button id="jsonButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">JSON</button>
+                <button id="tweakButton" style="background: #ffea29; color: #1a1a1a; padding: 8px 16px; border: 2px solid #ffea29; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Modifier</button>
+                <button id="publishButton" style="background: #4caf50; color: #ffffff; padding: 8px 16px; border: 2px solid #4caf50; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Publier</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="content">
+            <div class="loading">Chargement des données...</div>
+        </div>
+    </div>
+
+
+    <footer id="footer" style="text-align: center; padding: 20px; color: #666; font-size: 0.9em;"></footer>
+
+    <script>
+        // Charger les images aléatoires pour les labels
+        async function loadRandomImages(collection) {
+            try {
+                const response = await fetch(`https://emo.musiques-incongrues.net/collections/${collection}/flamoji.json`);
+                const images = await response.json();
+                const imageArray = Object.values(images);
+
+                const labelCards = document.querySelectorAll('.card.blue');
+                labelCards.forEach(card => {
+                    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    if (randomImage && randomImage.path) {
+                        card.style.backgroundImage = `url('${randomImage.path}')`;
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des images labels:', error);
+            }
+        }
+
+        // Charger les images aléatoires pour les radios
+        async function loadRandomRadioImages(collection) {
+            try {
+                const response = await fetch(`https://emo.musiques-incongrues.net/collections/${collection}/flamoji.json`);
+                const images = await response.json();
+                const imageArray = Object.values(images);
+
+                const radioCards = document.querySelectorAll('.card.pink');
+                radioCards.forEach(card => {
+                    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    if (randomImage && randomImage.path) {
+                        card.style.backgroundImage = `url('${randomImage.path}')`;
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des images radios:', error);
+            }
+        }
+
+        // Charger les images aléatoires pour les artistes
+        async function loadRandomArtistImages(collection) {
+            try {
+                const response = await fetch(`https://emo.musiques-incongrues.net/collections/${collection}/flamoji.json`);
+                const images = await response.json();
+                const imageArray = Object.values(images);
+
+                const artistCards = document.querySelectorAll('.card.yellow');
+                artistCards.forEach(card => {
+                    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    if (randomImage && randomImage.path) {
+                        card.style.setProperty('background-image', `url('${randomImage.path}')`, 'important');
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des images artistes:', error);
+            }
+        }
+
+        // Charger les images aléatoires pour les contributeurs
+        async function loadRandomContributorImages(collection) {
+            try {
+                const response = await fetch(`https://emo.musiques-incongrues.net/collections/${collection}/flamoji.json`);
+                const images = await response.json();
+                const imageArray = Object.values(images);
+
+                const contributorCards = document.querySelectorAll('.card.purple');
+                contributorCards.forEach(card => {
+                    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    if (randomImage && randomImage.path) {
+                        card.style.setProperty('background-image', `url('${randomImage.path}')`, 'important');
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des images contributeurs:', error);
+            }
+        }
+
+        // Charger les images aléatoires pour les newcomers
+        async function loadRandomNewcomerImages(collection) {
+            try {
+                const response = await fetch(`https://emo.musiques-incongrues.net/collections/${collection}/flamoji.json`);
+                const images = await response.json();
+                const imageArray = Object.values(images);
+
+                const newcomerCards = document.querySelectorAll('.card.green');
+                newcomerCards.forEach(card => {
+                    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    if (randomImage && randomImage.path) {
+                        card.style.setProperty('background-image', `url('${randomImage.path}')`, 'important');
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des images newcomers:', error);
+            }
+        }
+
+        async function loadData() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const num = params.get('num') || 1;
+                const unit = params.get('unit') || 'weeks';
+                const limit = params.get('limit') || 50;
+                const base_date = params.get('base_date') || '';
+                const titre = params.get('titre') || 'Zeitgeist';
+
+                // Mettre à jour le titre de la page
+                document.title = titre + ' - Musiques Incongrues';
+                document.querySelector('h1').textContent = titre;
+
+                // Récupérer les collections depuis les paramètres URL
+                const collection_labels = params.get('collection_labels') || 'gargamelle';
+                const collection_radios = params.get('collection_radios') || 'discutons';
+                const collection_artists = params.get('collection_artists') || 'sonsoftheananas';
+                const collection_contributors = params.get('collection_contributors') || 'millemilliards';
+                const collection_newcomers = params.get('collection_newcomers') || 'amour';
+
+                let url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                if (base_date) {
+                    url += `&base_date=${base_date}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                const zeitgeist = data[0];
+                const { date_from, date_to, terms } = zeitgeist;
+                const newcomers = zeitgeist.newcomers || [];
+                const contributors = zeitgeist.contributors || [];
+
+                const dateFrom = new Date(date_from).toLocaleDateString('fr-FR', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+                const dateTo = new Date(date_to).toLocaleDateString('fr-FR', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+                
+                document.getElementById('dateRange').textContent = `Du ${dateFrom} au ${dateTo}`;
+
+                // Ajouter le lien rel alternate pour le JSON
+                const link = document.createElement('link');
+                link.rel = 'alternate';
+                link.type = 'application/json';
+                link.href = url;
+                document.head.appendChild(link);
+
+                let html = '';
+
+                // Pinacothèque - juste après le bandeau
+                if (zeitgeist.images && Array.isArray(zeitgeist.images) && zeitgeist.images.length > 0) {
+                    const filteredImages = zeitgeist.images.filter(item => item && item.url).slice(0, 8);
+                    if (filteredImages.length > 0) {
+                        html += `
+                            <div class="pinacotheque">
+                                <div class="mosaic">
+                                    ${filteredImages.map((image, index) => {
+                                        let classes = 'mosaic-item';
+                                        if (index === 0 || index === 6) classes += ' tall';
+                                        if (index === 2) classes += ' wide';
+                                        return `<div class="${classes}"><img src="${image.url}" alt="Image ${index + 1}"></div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Cher Journananal (éditorial)
+                const edito = params.get('edito') || '';
+                if (edito) {
+                    html += `
+                        <div class="section">
+                            <div class="section-header">
+                                <h2 class="section-title">Cher Journananal</h2>
+                            </div>
+                            <div class="section-description" style="font-size: 1.1em; border-left-color: #e600e6;">
+                                ${marked.parse(decodeURIComponent(edito))}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Nouvelles Têtes
+                if (newcomers && Array.isArray(newcomers) && newcomers.length > 0) {
+                    const filtered = newcomers.filter(item => item && item.username);
+                    if (filtered.length > 0) {
+                        const sortedNewcomers = filtered.sort((a, b) => a.username.localeCompare(b.username, 'fr'));
+                        html += `
+                            <div class="section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Nouvelles Têtes</h2>
+                                    <span class="section-count">${sortedNewcomers.length}</span>
+                                </div>
+                                <div class="section-description green-border">
+                                    Les nouveaux membres récemment inscrits sur la plateforme. Bienvenue à ces nouvelles recrues de la communauté Musiques Incongrues !
+                                </div>
+                                <div class="grid">
+                                    ${sortedNewcomers.map((item) => `
+                                        <a href="https://www.musiques-incongrues.net/u/${item.username}" target="_blank" class="card green">
+                                            <div class="card-name">${item.username}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Stackanananovistes (Contributeurs)
+                if (contributors && Array.isArray(contributors) && contributors.length > 0) {
+                    const filtered = contributors.filter(item => item && item.username);
+                    if (filtered.length > 0) {
+                        const sortedContributors = filtered.sort((a, b) => a.username.localeCompare(b.username, 'fr'));
+                        html += `
+                            <div class="section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Stackanananovistes</h2>
+                                    <span class="section-count">${sortedContributors.length}</span>
+                                </div>
+                                <div class="section-description purple-border">
+                                    Sympathiques maniaques, soyez bénis !
+                                </div>
+                                <div class="grid">
+                                    ${sortedContributors.map((item) => `
+                                        <a href="https://www.musiques-incongrues.net/u/${item.username}" target="_blank" class="card purple">
+                                            <div class="card-name">${item.username}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Labels
+                if (terms.labels && Array.isArray(terms.labels) && terms.labels.length > 0) {
+                    const filtered = terms.labels.filter(item => item && item.name);
+                    if (filtered.length > 0) {
+                        const sortedLabels = filtered.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+                        html += `
+                            <div class="section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Labels</h2>
+                                    <span class="section-count">${sortedLabels.length}</span>
+                                </div>
+                                <div class="section-description blue-border">
+                                    Intentions et pratiques variées.
+                                </div>
+                                <div class="grid">
+                                    ${sortedLabels.map((item) => `
+                                        <a href="https://www.musiques-incongrues.net/?label=${item.slug}" target="_blank" class="card blue">
+                                            <div class="card-name">${item.name}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Radios
+                if (terms.radios && Array.isArray(terms.radios) && terms.radios.length > 0) {
+                    const filtered = terms.radios.filter(item => item && item.name);
+                    if (filtered.length > 0) {
+                        const sortedRadios = filtered.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+                        html += `
+                            <div class="section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Radios</h2>
+                                    <span class="section-count">${sortedRadios.length}</span>
+                                </div>
+                                <div class="section-description pink-border">
+                                    Toujours là prêtes à infiltrer nos oreilles curieuses.
+                                </div>
+                                <div class="grid">
+                                    ${sortedRadios.map((item) => `
+                                        <a href="https://www.musiques-incongrues.net/?radio=${item.slug}" target="_blank" class="card pink">
+                                            <div class="card-name">${item.name}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Artistes
+                if (terms.people && Array.isArray(terms.people) && terms.people.length > 0) {
+                    const filtered = terms.people.filter(item => item && item.name);
+                    if (filtered.length > 0) {
+                        const sortedPeople = filtered.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+                        html += `
+                            <div class="section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Artistes</h2>
+                                    <span class="section-count">${sortedPeople.length}</span>
+                                </div>
+                                <div class="section-description yellow-border">
+                                    Ça grouille, ça frétille, ça complote. Quel bonheur !
+                                </div>
+                                <div class="grid">
+                                    ${sortedPeople.map((item) => `
+                                        <a href="https://www.musiques-incongrues.net/?artist=${item.slug}" target="_blank" class="card yellow">
+                                            <div class="card-name">${item.name}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+
+
+                document.getElementById('content').innerHTML = html;
+                
+                // Charger les images avec les collections configurées
+                await loadRandomImages(collection_labels);
+                await loadRandomRadioImages(collection_radios);
+                await loadRandomArtistImages(collection_artists);
+                await loadRandomContributorImages(collection_contributors);
+                await loadRandomNewcomerImages(collection_newcomers);
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        Erreur lors du chargement des données : ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Configuration des boutons
+        function setupButtons() {
+            const params = new URLSearchParams(window.location.search);
+            const configUrl = 'config.html?' + params.toString();
+            
+            // Bouton Tweak
+            document.getElementById('tweakButton').onclick = function() {
+                window.location.href = configUrl;
+            };
+            
+            // Bouton JSON - sera configuré après le chargement des données
+            let jsonUrl = '';
+            
+            // Fonction pour configurer le bouton JSON
+            window.setupJsonButton = function(url) {
+                jsonUrl = url;
+                document.getElementById('jsonButton').onclick = function() {
+                    window.open(url, '_blank');
+                };
+            };
+
+            // Bouton Publier
+            document.getElementById('publishButton').onclick = function() {
+                publierEpisode();
+            };
+        }
+
+        // Fonction pour publier un épisode
+        async function publierEpisode() {
+            const publishButton = document.getElementById('publishButton');
+            const originalText = publishButton.textContent;
+
+            try {
+                // Désactiver le bouton pendant la publication
+                publishButton.disabled = true;
+                publishButton.textContent = 'Publication...';
+                publishButton.style.background = '#cccccc';
+                publishButton.style.cursor = 'not-allowed';
+
+                // Récupérer les paramètres actuels
+                const params = new URLSearchParams(window.location.search);
+                console.log('Paramètres de publication:', params.toString());
+
+                // Construire l'URL JSON (comme dans loadDataWithButtons)
+                const num = params.get('num') || 1;
+                const unit = params.get('unit') || 'weeks';
+                const limit = params.get('limit') || 50;
+                const base_date = params.get('base_date') || '';
+
+                let jsonUrl = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                if (base_date) {
+                    jsonUrl += `&base_date=${base_date}`;
+                }
+
+                // Capturer le HTML de la page sans les boutons d'action
+                const actionButtons = document.getElementById('actionButtons');
+                let htmlContent = '';
+
+                if (actionButtons) {
+                    // Masquer temporairement les boutons d'action pour la capture
+                    actionButtons.style.display = 'none';
+                    htmlContent = document.documentElement.outerHTML;
+                    actionButtons.style.display = 'flex'; // Remettre l'affichage original
+                } else {
+                    htmlContent = document.documentElement.outerHTML;
+                }
+
+                // Ajouter l'URL JSON aux paramètres
+                params.set('json_url', encodeURIComponent(jsonUrl));
+
+                // Ajouter l'URL complète de la preview
+                const previewUrl = window.location.href;
+                params.set('preview_url', encodeURIComponent(previewUrl));
+
+                // S'assurer que tous les paramètres de configuration sont inclus
+                const configParams = [
+                    'collection_labels', 'collection_radios', 'collection_artists',
+                    'collection_contributors', 'collection_newcomers', 'titre', 'catalogue', 'uid', 'edito'
+                ];
+
+                configParams.forEach(param => {
+                    if (!params.has(param)) {
+                        // Valeurs par défaut si le paramètre n'est pas présent
+                        const defaults = {
+                            'collection_labels': 'gargamelle',
+                            'collection_radios': 'discutons',
+                            'collection_artists': 'sonsoftheananas',
+                            'collection_contributors': 'millemilliards',
+                            'collection_newcomers': 'amour',
+                            'titre': 'Zeitgeist',
+                            'catalogue': '',
+                            'uid': '',
+                            'edito': ''
+                        };
+                        params.set(param, defaults[param]);
+                    }
+                });
+
+                console.log('URL JSON ajoutée:', jsonUrl);
+                console.log('URL Preview ajoutée:', previewUrl);
+                console.log('Paramètres complets:', params.toString());
+
+                // Construire l'URL du workflow avec tous les paramètres
+                const workflowUrl = 'https://n8n.musiques-incongrues.net/webhook-test/zeitgeist.publish?' + params.toString();
+
+                console.log('Publication vers:', workflowUrl);
+
+                // Appeler le workflow de publication avec le contenu HTML
+                const response = await fetch(workflowUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        html_content: htmlContent,
+                        current_url: previewUrl
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Résultat publication:', result);
+                    
+                    // Succès
+                    publishButton.textContent = '✓ Publié';
+                    publishButton.style.background = '#4caf50';
+                    publishButton.style.borderColor = '#4caf50';
+                    publishButton.style.color = '#ffffff';
+                    
+                    // Afficher un message de succès
+                    alert('Épisode publié avec succès !');
+                    
+                    // Remettre le bouton à l'état normal après 3 secondes
+                    setTimeout(() => {
+                        publishButton.textContent = originalText;
+                        publishButton.style.background = '#cccccc';
+                        publishButton.style.borderColor = '#cccccc';
+                        publishButton.style.color = '#666666';
+                        publishButton.disabled = true;
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de la publication:', error);
+                
+                // Erreur
+                publishButton.textContent = '✗ Erreur';
+                publishButton.style.background = '#f44336';
+                publishButton.style.borderColor = '#f44336';
+                publishButton.style.color = '#ffffff';
+                
+                // Afficher un message d'erreur
+                alert('Erreur lors de la publication: ' + error.message);
+                
+                // Remettre le bouton à l'état normal après 3 secondes
+                setTimeout(() => {
+                    publishButton.textContent = originalText;
+                    publishButton.style.background = '#cccccc';
+                    publishButton.style.borderColor = '#cccccc';
+                    publishButton.style.color = '#666666';
+                    publishButton.disabled = true;
+                }, 3000);
+            }
+        }
+
+        // Modifier loadData pour configurer le bouton JSON
+        async function loadDataWithButtons() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const num = params.get('num') || 1;
+                const unit = params.get('unit') || 'weeks';
+                const limit = params.get('limit') || 50;
+                const base_date = params.get('base_date') || '';
+
+                let url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                if (base_date) {
+                    url += `&base_date=${base_date}`;
+                }
+
+                // Configurer le bouton JSON
+                window.setupJsonButton(url);
+                
+                // Continuer avec le chargement normal
+                return loadData();
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        setupButtons();
+        loadDataWithButtons();
+    </script>
+</body>
+</html>
