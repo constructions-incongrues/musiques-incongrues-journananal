@@ -347,13 +347,18 @@
     <header>
         <div class="header-content">
             <div class="logo">
-                <img src="https://emo.musiques-incongrues.net/collections/sonsoftheananas/sonsoftheananas_ananacool-25.png" alt="Musiques Incongrues">
+                <img src="https://emo.musiques-incongrues.net/collections/sonsoftheananas/ananacool-256.png" alt="Musiques Incongrues">
                 <div>
                     <h1>Zeitgeist</h1>
                     <div class="subtitle">Musiques Incongrues</div>
                 </div>
             </div>
             <div class="date-range" id="dateRange">Chargement...</div>
+            <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+                <button id="tweakButton" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; cursor: pointer; font-size: 14px; backdrop-filter: blur(5px);">⚙️ Tweak</button>
+                <button id="jsonButton" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; cursor: pointer; font-size: 14px; backdrop-filter: blur(5px);">📄 JSON</button>
+                <button id="publishButton" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); padding: 8px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; cursor: not-allowed; font-size: 14px; backdrop-filter: blur(5px);" disabled>🚀 Publish</button>
+            </div>
         </div>
     </header>
 
@@ -363,9 +368,6 @@
         </div>
     </div>
 
-    <div style="text-align: center; padding: 20px;">
-        <button id="tweakButton" style="background: #e600e6; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Tweak Configuration</button>
-    </div>
 
     <footer id="footer" style="text-align: center; padding: 20px; color: #666; font-size: 0.9em;"></footer>
 
@@ -685,17 +687,54 @@
             }
         }
 
-        // Configuration du bouton Tweak
-        function setupTweakButton() {
+        // Configuration des boutons
+        function setupButtons() {
             const params = new URLSearchParams(window.location.search);
             const configUrl = 'config.html?' + params.toString();
+            
+            // Bouton Tweak
             document.getElementById('tweakButton').onclick = function() {
                 window.location.href = configUrl;
             };
+            
+            // Bouton JSON - sera configuré après le chargement des données
+            let jsonUrl = '';
+            
+            // Fonction pour configurer le bouton JSON
+            window.setupJsonButton = function(url) {
+                jsonUrl = url;
+                document.getElementById('jsonButton').onclick = function() {
+                    window.open(url, '_blank');
+                };
+            };
         }
 
-        loadData();
-        setupTweakButton();
+        // Modifier loadData pour configurer le bouton JSON
+        async function loadDataWithButtons() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const num = params.get('num') || 1;
+                const unit = params.get('unit') || 'weeks';
+                const limit = params.get('limit') || 50;
+                const base_date = params.get('base_date') || '';
+
+                let url = `https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=${num}&unit=${unit}&limit=${limit}`;
+                if (base_date) {
+                    url += `&base_date=${base_date}`;
+                }
+
+                // Configurer le bouton JSON
+                window.setupJsonButton(url);
+                
+                // Continuer avec le chargement normal
+                return loadData();
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        setupButtons();
+        loadDataWithButtons();
     </script>
 </body>
 </html>
