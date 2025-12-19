@@ -1,0 +1,187 @@
+{
+  "name": "Zeitgeist Configuration Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "zeitgeist.config",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "titre",
+              "value": "={{ $json.query.titre }}"
+            },
+            {
+              "name": "num",
+              "value": "={{ $json.query.num }}"
+            },
+            {
+              "name": "base_date",
+              "value": "={{ $json.query.base_date }}"
+            },
+            {
+              "name": "unit",
+              "value": "={{ $json.query.unit }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.query.limit }}"
+            },
+            {
+              "name": "collection_labels",
+              "value": "={{ $json.query.collection_labels }}"
+            },
+            {
+              "name": "collection_radios",
+              "value": "={{ $json.query.collection_radios }}"
+            },
+            {
+              "name": "collection_artists",
+              "value": "={{ $json.query.collection_artists }}"
+            },
+            {
+              "name": "collection_contributors",
+              "value": "={{ $json.query.collection_contributors }}"
+            },
+            {
+              "name": "collection_newcomers",
+              "value": "={{ $json.query.collection_newcomers }}"
+            }
+          ]
+        }
+      },
+      "name": "Set Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://emo.musiques-incongrues.net/collections.json",
+        "options": {}
+      },
+      "name": "Fetch Collections List",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        460,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://n8n.musiques-incongrues.net/webhook/zeitgeist.json?num=' + $json.num + '&unit=' + $json.unit + '&limit=' + $json.limit }}",
+        "options": {}
+      },
+      "name": "Fetch Zeitgeist Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "generated_url",
+              "value": "={{ 'index.html?num=' + $('Set Configuration').item.json.num + '&unit=' + $('Set Configuration').item.json.unit + '&limit=' + $('Set Configuration').item.json.limit + '&collection_labels=' + $('Set Configuration').item.json.collection_labels + '&collection_radios=' + $('Set Configuration').item.json.collection_radios + '&collection_artists=' + $('Set Configuration').item.json.collection_artists + '&collection_contributors=' + $('Set Configuration').item.json.collection_contributors + '&collection_newcomers=' + $('Set Configuration').item.json.collection_newcomers }}"
+            }
+          ]
+        }
+      },
+      "name": "Generate URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ 'Page Zeitgeist générée: ' + $json.generated_url }}"
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Configuration": {
+      "main": [
+        [
+          {
+            "node": "Fetch Zeitgeist Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Zeitgeist Data": {
+      "main": [
+        [
+          {
+            "node": "Generate URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate URL": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "staticData": null,
+  "meta": {
+    "instanceId": "instance1"
+  },
+  "id": "zeitgeist-config-workflow",
+  "tags": []
+}
