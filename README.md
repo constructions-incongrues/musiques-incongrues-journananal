@@ -10,7 +10,10 @@ Ce projet est configuré pour être déployé automatiquement sur GitHub Pages v
 
 1. Aller dans **Settings** > **Pages** du repository
 2. Sous **Build and deployment**, sélectionner **GitHub Actions** comme source
-3. Pousser sur la branche `main` pour déclencher le déploiement
+3. Configurer le domaine personnalisé : `journananal.musiques-incongrues.net`
+4. Pousser sur la branche `main` pour déclencher le déploiement
+
+**URL du site :** https://journananal.musiques-incongrues.net
 
 ## Fichiers
 
