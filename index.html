@@ -471,6 +471,11 @@
                 const unit = params.get('unit') || 'weeks';
                 const limit = params.get('limit') || 50;
                 const base_date = params.get('base_date') || '';
+                const titre = params.get('titre') || 'Zeitgeist';
+
+                // Mettre à jour le titre de la page
+                document.title = titre + ' - Musiques Incongrues';
+                document.querySelector('h1').textContent = titre;
 
                 // Récupérer les collections depuis les paramètres URL
                 const collection_labels = params.get('collection_labels') || 'gargamelle';
