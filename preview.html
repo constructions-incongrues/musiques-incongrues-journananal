@@ -426,6 +426,7 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- INJECT_PARAMS_HERE -->
 </head>
 <body>
     <header>
@@ -856,6 +857,14 @@
                 } else {
                     htmlContent = document.documentElement.outerHTML;
                 }
+
+                // Injecter les paramètres de query string directement dans le fichier HTML
+                const urlParamsObj = {};
+                for (const [key, value] of params.entries()) {
+                    urlParamsObj[key] = value;
+                }
+                const paramsJSON = JSON.stringify(urlParamsObj);
+                htmlContent = htmlContent.replace('<!-- INJECT_PARAMS_HERE -->', '<script id="embedded-params" type="application/json">' + paramsJSON + '</script>');
 
                 // Pour les versions publiées, remplacer l'URL n8n par une URL relative vers le JSON local
                 const catalogue = params.get('catalogue') || '';
