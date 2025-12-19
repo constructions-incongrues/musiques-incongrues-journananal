@@ -78,8 +78,7 @@
             <p>Configurez les paramètres pour générer une page Zeitgeist personnalisée.</p>
         </div>
 
-        <form id="configForm" action="https://n8n.musiques-incongrues.net/webhook/zeitgeist.config" method="GET">
-            <!-- Remplacez l'URL ci-dessus par l'URL de votre instance n8n + /webhook/config -->
+        <form id="configForm" onsubmit="return redirectToZeitgeist(event)">
             <div class="form-group">
                 <label for="titre">Titre de la page:</label>
                 <input type="text" id="titre" name="titre" value="Zeitgeist - Musiques Incongrues" required>
@@ -251,6 +250,24 @@
                     document.getElementById(field).value = value;
                 }
             });
+        }
+
+        // Rediriger vers la page Zeitgeist avec les paramètres
+        function redirectToZeitgeist(event) {
+            event.preventDefault();
+
+            const params = new URLSearchParams();
+            params.set('num', document.getElementById('num').value);
+            params.set('unit', document.getElementById('unit').value);
+            params.set('limit', document.getElementById('limit').value);
+            params.set('collection_labels', document.getElementById('collection_labels').value);
+            params.set('collection_radios', document.getElementById('collection_radios').value);
+            params.set('collection_artists', document.getElementById('collection_artists').value);
+            params.set('collection_contributors', document.getElementById('collection_contributors').value);
+            params.set('collection_newcomers', document.getElementById('collection_newcomers').value);
+
+            window.location.href = 'index.html?' + params.toString();
+            return false;
         }
 
         // Charger les collections au chargement de la page
