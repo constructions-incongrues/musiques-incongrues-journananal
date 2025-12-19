@@ -257,6 +257,8 @@
             event.preventDefault();
 
             const params = new URLSearchParams();
+            params.set('titre', document.getElementById('titre').value);
+            params.set('base_date', document.getElementById('base_date').value);
             params.set('num', document.getElementById('num').value);
             params.set('unit', document.getElementById('unit').value);
             params.set('limit', document.getElementById('limit').value);
@@ -266,7 +268,11 @@
             params.set('collection_contributors', document.getElementById('collection_contributors').value);
             params.set('collection_newcomers', document.getElementById('collection_newcomers').value);
 
-            window.location.href = 'index.html?' + params.toString();
+            // Construire l'URL absolue basée sur l'emplacement actuel
+            const baseUrl = window.location.href.replace(/config\.html.*$/, '');
+            const zeitgeistUrl = baseUrl + 'index.html?' + params.toString();
+
+            window.location.href = zeitgeistUrl;
             return false;
         }
 
