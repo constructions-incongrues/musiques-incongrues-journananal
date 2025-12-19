@@ -860,7 +860,7 @@
                 // Pour les versions publiées, remplacer l'URL n8n par une URL relative vers le JSON local
                 const catalogue = params.get('catalogue') || '';
                 const uid = params.get('uid') || '';
-                const localJsonUrl = `/${catalogue}/${uid}.json`;
+                const localJsonUrl = `${catalogue}/${uid}.json`;
 
                 // Remplacer l'URL dans le script JavaScript
                 htmlContent = htmlContent.replace(
